@@ -4,7 +4,7 @@
 
 [![Public release QA](https://github.com/khaledzidan203-stack/demandflow-360/actions/workflows/qa.yml/badge.svg)](https://github.com/khaledzidan203-stack/demandflow-360/actions/workflows/qa.yml)
 [![Python 3.11+](https://img.shields.io/badge/Python-3.11%2B-3776AB?logo=python&logoColor=white)](https://www.python.org/)
-[![Power BI](https://img.shields.io/badge/Power_BI-PBIP%20%7C%20PBIR%20%7C%20TMDL-F2C811?logo=powerbi&logoColor=black)](powerbi/DemandFlow%20360.pbip)
+[![Power BI](https://img.shields.io/badge/Power_BI-PBIP%20%7C%20PBIR%20%7C%20TMDL-F2C811?logo=powerbi&logoColor=black)](docs/POWER_BI_GUIDE.md)
 [![Data: synthetic](https://img.shields.io/badge/Data-100%25%20Synthetic-188675)](docs/LIMITATIONS.md)
 
 > **Release:** [v0.1.0-descriptive-pilot](https://github.com/khaledzidan203-stack/demandflow-360/releases/tag/v0.1.0-descriptive-pilot) · **56-day synthetic descriptive pilot — NOT TRAINING APPROVED.**
@@ -35,38 +35,17 @@ The analytical scope is intentionally bounded. Observed fulfilled sales are **no
 
 **Actual screenshots from the approved native Power BI report.** Click a screenshot to view it full size. These are historical owner-reviewed renderings, not newly captured clean-clone interaction tests.
 
-<table>
- <tr>
-  <td align="center" valign="top" width="50%">
-    <a href="screenshots/00_index.png"><img src="screenshots/00_index.png" alt="00 INDEX" width="100%"></a>
-    <p><strong>00 · INDEX</strong><br>Navigation across five analytical pages</p>
-  </td>
-  <td align="center" valign="top" width="50%">
-    <a href="screenshots/01_executive_overview.png"><img src="screenshots/01_executive_overview.png" alt="01 Executive Overview" width="100%"></a>
-    <p><strong>01 · Executive Overview</strong><br>Fulfillment, exposure and performance trends</p>
-  </td>
- </tr>
- <tr>
-  <td align="center" valign="top" width="50%">
-    <a href="screenshots/02_sales_availability.png"><img src="screenshots/02_sales_availability.png" alt="02 Sales & Availability" width="100%"></a>
-    <p><strong>02 · Sales & Availability</strong><br>Daily sales and availability patterns</p>
-  </td>
-  <td align="center" valign="top" width="50%">
-    <a href="screenshots/03_store_sku_performance.png"><img src="screenshots/03_store_sku_performance.png" alt="03 Store & SKU Performance" width="100%"></a>
-    <p><strong>03 · Store & SKU Performance</strong><br>Fulfilled units per cell and full exposure</p>
-  </td>
- </tr>
- <tr>
-  <td align="center" valign="top" width="50%">
-    <a href="screenshots/04_stockout_diagnostics.png"><img src="screenshots/04_stockout_diagnostics.png" alt="04 Stockout Diagnostics" width="100%"></a>
-    <p><strong>04 · Stockout Diagnostics</strong><br>Censoring, zero sales and stock snapshots</p>
-  </td>
-  <td align="center" valign="top" width="50%">
-    <a href="screenshots/05_data_quality.png"><img src="screenshots/05_data_quality.png" alt="05 Data Quality" width="100%"></a>
-    <p><strong>05 · Data Quality</strong><br>Coverage, missingness and duplicates</p>
-  </td>
- </tr>
-</table>
+| Report page | Report page |
+|:--:|:--:|
+| **00 · INDEX** | **01 · Executive Overview** |
+| ![00 · INDEX](screenshots/00_index.png) | ![01 · Executive Overview](screenshots/01_executive_overview.png) |
+| Five-page navigation hub | Fulfillment, exposure and performance trends |
+| **02 · Sales & Availability** | **03 · Store & SKU Performance** |
+| ![02 · Sales & Availability](screenshots/02_sales_availability.png) | ![03 · Store & SKU Performance](screenshots/03_store_sku_performance.png) |
+| Daily sales and availability patterns | Fulfilled units per cell and full exposure |
+| **04 · Stockout Diagnostics** | **05 · Data Quality** |
+| ![04 · Stockout Diagnostics](screenshots/04_stockout_diagnostics.png) | ![05 · Data Quality](screenshots/05_data_quality.png) |
+| Censoring, zero sales and stock snapshots | Coverage, missingness and duplicates |
 
 ## Open in Power BI
 
