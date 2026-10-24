@@ -1,6 +1,13 @@
-# DemandFlow 360 ? Retail Demand & Supply Chain Analytics
+# DemandFlow 360
 
-**Synthetic 56-day descriptive pilot ? NOT TRAINING APPROVED.**
+**Retail Demand & Supply Chain Analytics · Native Power BI Portfolio**
+
+[![Public release QA](https://github.com/khaledzidan203-stack/demandflow-360/actions/workflows/qa.yml/badge.svg)](https://github.com/khaledzidan203-stack/demandflow-360/actions/workflows/qa.yml)
+[![Python 3.11+](https://img.shields.io/badge/Python-3.11%2B-3776AB?logo=python&logoColor=white)](https://www.python.org/)
+[![Power BI](https://img.shields.io/badge/Power_BI-PBIP%20%7C%20PBIR%20%7C%20TMDL-F2C811?logo=powerbi&logoColor=black)](powerbi/DemandFlow%20360.pbip)
+[![Data: synthetic](https://img.shields.io/badge/Data-100%25%20Synthetic-188675)](docs/LIMITATIONS.md)
+
+> **Release:** [v0.1.0-descriptive-pilot](https://github.com/khaledzidan203-stack/demandflow-360/releases/tag/v0.1.0-descriptive-pilot) · **56-day synthetic descriptive pilot — NOT TRAINING APPROVED.**
 
 Retail sales tell us what was fulfilled, not everything customers wanted to buy.
 DemandFlow 360 connects a separately developed physical supply-chain simulation
@@ -11,6 +18,82 @@ This repository is complete for the public descriptive layer: frozen public inpu
 reproducible analysis, validated semantic definitions, a portable launcher and tests.
 It does not ship the restricted evaluator, the development archive or a completed
 forecasting/optimization application.
+
+**Explore:** [Dashboard gallery](#dashboard-gallery) · [Open in Power BI](#open-in-power-bi) · [Business case](#business-questions) · [Reproduce & test](#reproduce-and-test) · [QA evidence](#qa-and-release-status)
+
+---
+
+## Project at a glance
+
+| Pilot window | Network | Observed data | Interactive report |
+|:--|:--|:--|:--|
+| **56 simulated days** | **6 stores · 8 SKUs** | **2,688 cells · 5,272 fulfilled units** | **6 native Power BI pages** |
+
+The analytical scope is intentionally bounded. Observed fulfilled sales are **not** unconstrained demand; stock-related censoring affected **53.16%** of observed cells. The wider forecasting and inventory-optimization roadmap is not claimed as completed.
+
+## Dashboard gallery
+
+**Actual screenshots from the approved native Power BI report.** Click a screenshot to view it full size. These are historical owner-reviewed renderings, not newly captured clean-clone interaction tests.
+
+<table>
+ <tr>
+  <td align="center" valign="top" width="50%">
+    <a href="screenshots/00_index.png"><img src="screenshots/00_index.png" alt="00 INDEX" width="100%"></a>
+    <p><strong>00 · INDEX</strong><br>Navigation across five analytical pages</p>
+  </td>
+  <td align="center" valign="top" width="50%">
+    <a href="screenshots/01_executive_overview.png"><img src="screenshots/01_executive_overview.png" alt="01 Executive Overview" width="100%"></a>
+    <p><strong>01 · Executive Overview</strong><br>Fulfillment, exposure and performance trends</p>
+  </td>
+ </tr>
+ <tr>
+  <td align="center" valign="top" width="50%">
+    <a href="screenshots/02_sales_availability.png"><img src="screenshots/02_sales_availability.png" alt="02 Sales & Availability" width="100%"></a>
+    <p><strong>02 · Sales & Availability</strong><br>Daily sales and availability patterns</p>
+  </td>
+  <td align="center" valign="top" width="50%">
+    <a href="screenshots/03_store_sku_performance.png"><img src="screenshots/03_store_sku_performance.png" alt="03 Store & SKU Performance" width="100%"></a>
+    <p><strong>03 · Store & SKU Performance</strong><br>Fulfilled units per cell and full exposure</p>
+  </td>
+ </tr>
+ <tr>
+  <td align="center" valign="top" width="50%">
+    <a href="screenshots/04_stockout_diagnostics.png"><img src="screenshots/04_stockout_diagnostics.png" alt="04 Stockout Diagnostics" width="100%"></a>
+    <p><strong>04 · Stockout Diagnostics</strong><br>Censoring, zero sales and stock snapshots</p>
+  </td>
+  <td align="center" valign="top" width="50%">
+    <a href="screenshots/05_data_quality.png"><img src="screenshots/05_data_quality.png" alt="05 Data Quality" width="100%"></a>
+    <p><strong>05 · Data Quality</strong><br>Coverage, missingness and duplicates</p>
+  </td>
+ </tr>
+</table>
+
+## Open in Power BI
+
+Requirements: Windows, current Microsoft Power BI Desktop with PBIP support,
+and Python 3.11 or newer. No Python third-party libraries, database server or
+DAX Studio installation are required for ordinary use.
+
+1. Clone this repository or download and extract the **entire** repository ZIP.
+2. Double-click **Launch_DemandFlow360.cmd**, or run:
+
+```powershell
+python launch_powerbi.py
+```
+
+3. In Power BI Desktop, select **Home > Refresh** and wait for completion.
+4. Use INDEX navigation and HOME buttons (Ctrl+click in Desktop edit mode).
+   Pilot week, store/city and category slicers filter the native visuals.
+
+The launcher validates CSV fingerprints/schema/keys and the native file inventory,
+then prepares an ignored `.runtime/session_.../powerbi` project with a machine-local
+DataRoot. It discovers its own checkout location, including spaces and Unicode;
+it does not edit the committed report. Each launch creates a fresh session so it
+cannot overwrite an already opened project. Runtime copies are disposable local
+work; edits made inside one are not changes to the canonical project.
+
+Do not open the canonical PBIP directly: its deliberate DataRoot placeholder
+must be configured by the launcher. See [Power BI guide](docs/POWER_BI_GUIDE.md).
 
 ## Business questions
 
@@ -39,8 +122,8 @@ outcomes are excluded. See [architecture](docs/ARCHITECTURE.md).
 
 ## Scope and findings
 
-One run/scenario/policy; days **2?57**, **6 stores**, **8 durable SKUs**.
-One fact row is run ? scenario ? policy ? day ? store ? SKU.
+One run/scenario/policy; days **2–57**, **6 stores**, **8 durable SKUs**.
+One fact row is run × scenario × policy × day × store × SKU.
 Day indices and seven-day pilot blocks are preserved; no calendar dates or prices
 have been invented.
 
@@ -61,33 +144,6 @@ STORE-018 fulfilled 904 units; SKU-0245 fulfilled 47 with full exposure in all i
 336 cells. Availability changes how these rankings should be interpreted.
 See the [case study](docs/CASE_STUDY.md) and [data dictionary](docs/DATA_MODEL.md).
 
-## Run the interactive report
-
-Requirements: Windows, current Microsoft Power BI Desktop with PBIP support,
-and Python 3.11 or newer. No Python third-party libraries, database server or
-DAX Studio installation are required for ordinary use.
-
-1. Clone this repository or download and extract the **entire** repository ZIP.
-2. Double-click **Launch_DemandFlow360.cmd**, or run:
-
-```powershell
-python launch_powerbi.py
-```
-
-3. In Power BI Desktop, select **Home > Refresh** and wait for completion.
-4. Use INDEX navigation and HOME buttons (Ctrl+click in Desktop edit mode).
-   Pilot week, store/city and category slicers filter the native visuals.
-
-The launcher validates CSV fingerprints/schema/keys and the native file inventory,
-then prepares an ignored `.runtime/session_.../powerbi` project with a machine-local
-DataRoot. It discovers its own checkout location, including spaces and Unicode;
-it does not edit the committed report. Each launch creates a fresh session so it
-cannot overwrite an already opened project. Runtime copies are disposable local
-work; edits made inside one are not changes to the canonical project.
-
-Do not open the canonical PBIP directly: its deliberate DataRoot placeholder
-must be configured by the launcher. See [Power BI guide](docs/POWER_BI_GUIDE.md).
-
 ## Reproduce and test
 
 From the checkout root (Python/SQL QA also runs on Linux):
@@ -107,40 +163,23 @@ QA totals. The original CSVs remain unchanged. Six grouping levels reconcile
 checks. [SQL queries](sql/business_queries.sql) are reusable against the generated
 database. See [reproducibility](docs/REPRODUCIBILITY.md).
 
-## Power BI dashboard
+## Repository map
 
-These are the owner's genuine approved renderings, visually reviewed for this
-release. They are evidence of the source report, not newly captured clean-clone UI tests.
+```text
+demandflow-360/
+├── data/powerbi/            # Four observed-only CSV tables
+├── powerbi/                 # Editable .pbip, PBIR pages and TMDL model
+├── screenshots/             # Six genuine Power BI screenshots
+├── sql/                     # Analytical SQL views
+├── tools/                   # Reproducible analysis and QA
+├── tests/                   # Automated release tests
+├── docs/                    # Case study, definitions, QA and limitations
+├── .github/workflows/       # Cross-platform validation
+├── launch_powerbi.py        # Portable Python entry point
+└── Launch_DemandFlow360.cmd # Windows double-click launcher
+```
 
-### 00 ? INDEX
-Five native navigation buttons connect the analytical pages.
-
-![Index](screenshots/00_index.png)
-
-### 01 ? Executive Overview
-Fulfillment, exposure, weekly trends and store/SKU comparisons.
-
-![Executive overview](screenshots/01_executive_overview.png)
-
-### 02 ? Sales & Availability
-Read sales alongside exposure status and no-exposure patterns.
-
-![Sales and availability](screenshots/02_sales_availability.png)
-
-### 03 ? Store & SKU Performance
-Compare units per cell with full exposure rather than interpreting sales as demand.
-
-![Store and SKU performance](screenshots/03_store_sku_performance.png)
-
-### 04 ? Stockout Diagnostics
-Distinguish zero sales, censoring and the last selected day's stock snapshot.
-
-![Stockout diagnostics](screenshots/04_stockout_diagnostics.png)
-
-### 05 ? Data Quality
-Expected cells, missingness, duplicate grain and zero sales under full exposure.
-
-![Data quality](screenshots/05_data_quality.png)
+**Further reading:** [Case study](docs/CASE_STUDY.md) · [Data model](docs/DATA_MODEL.md) · [KPI dictionary](docs/KPI_DICTIONARY.md) · [Reproducibility](docs/REPRODUCIBILITY.md) · [QA evidence](docs/QA_EVIDENCE.md) · [Limitations](docs/LIMITATIONS.md)
 
 ## QA and release status
 
