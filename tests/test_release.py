@@ -48,8 +48,8 @@ class ReleaseTests(unittest.TestCase):
             expressions=list((copy/'.runtime').glob('session_*/powerbi/*SemanticModel/definition/expressions.tmdl'))
             self.assertEqual(len(expressions),2)
             self.assertEqual(expressions[0].read_bytes(),expressions[1].read_bytes())
-            self.assertIn((copy/'data/powerbi').as_posix(),expressions[0].read_text())
-            self.assertNotIn(str(ROOT),expressions[0].read_text())
+            self.assertIn((copy/'data/powerbi').resolve().as_posix(),expressions[0].read_text(encoding='utf-8'))
+            self.assertNotIn(str(ROOT),expressions[0].read_text(encoding='utf-8'))
             for name,sha in before.items(): self.assertEqual(digest(copy/name),sha,name)
             self.assertEqual(reproduce(copy)['totals']['sales_units'],5272)
 
