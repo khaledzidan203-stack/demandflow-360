@@ -1,0 +1,89 @@
+{
+  "release": "Synthetic 56-day descriptive pilot ? NOT TRAINING APPROVED",
+  "files": {
+    "dim_day.csv": {
+      "sha256": "da24856659504107c9852c6d35bdd5a67e41f084b2e7acacf5b4e3b7bb2e0650",
+      "columns": [
+        "day_index",
+        "pilot_day_number",
+        "pilot_week_index",
+        "pilot_week_label",
+        "pilot_day_in_week_index"
+      ],
+      "rows": 56
+    },
+    "dim_sku.csv": {
+      "sha256": "fc91b6ca8e283603b292c2c98b8e9e5b10570f354e841a3d0250572079fa8af4",
+      "columns": [
+        "sku_id",
+        "category",
+        "expirable",
+        "lot_tracking_required",
+        "unit_volume_ml",
+        "provenance"
+      ],
+      "rows": 8
+    },
+    "dim_store.csv": {
+      "sha256": "8268b940b70b82b0bd377eec5ab35e2d2d12702fdfcd571ad8da5039bf555caf",
+      "columns": [
+        "store_id",
+        "city_id",
+        "city_name",
+        "region_id",
+        "region_name",
+        "assigned_dc_id",
+        "capacity_liters",
+        "provenance"
+      ],
+      "rows": 6
+    },
+    "fact_observed.csv": {
+      "sha256": "d05772b9a3f425c1021c161680bd77e63cd897bb47b44583c1524a174afdc420",
+      "columns": [
+        "run_id",
+        "scenario_id",
+        "policy_id",
+        "day_index",
+        "available_at_day",
+        "store_id",
+        "sku_id",
+        "opening_saleable_qty",
+        "gross_sales_qty",
+        "eod_saleable_qty",
+        "availability_status",
+        "eod_zero_stock_flag",
+        "full_exposure_flag",
+        "censored_flag",
+        "no_exposure_flag",
+        "zero_sales_flag",
+        "provenance"
+      ],
+      "rows": 2688
+    }
+  },
+  "lineage": {
+    "controller": "CAPACITY_RECURRING_CANCEL_V1",
+    "model_training_eligible": false,
+    "po_every": 7,
+    "policy_id": "P310_TRANSFER_WITH_PO",
+    "release": "56-day synthetic descriptive pilot. NOT TRAINING APPROVED.",
+    "residual_treatment": "CANCEL_AT_RECEIPT",
+    "run_id": "DF360_56D_CAPACITY_RECURRING_CANCEL_V1",
+    "scenario_id": "BASE-DEMAND-V1",
+    "sources": {
+      "master/bridge_assortment.csv": "7ef1aa215daea9a8873c4e94b43d8b3e173ce01fd95c39cc67aeb3f75cec1b6b",
+      "master/dim_city.csv": "5362b7984e7455f02b6e8c01407e35ced5ac1c02981dcfad9965aa09b95f9c2c",
+      "master/dim_location.csv": "2ac31e0dd556d5c6d39035b1796fe73cb747aefbb1fa110b04bf926724018905",
+      "master/dim_region.csv": "0f3b52f3930dd8f5c24b9e752429f4bec1aaaf00d815750cb2981b01848e9acd",
+      "master/dim_sku.csv": "e99e4fede41559059812b1ff3d47bcfa1fdac9254249ebcdb3b34f302c352494",
+      "master_manifest": "51ec1bd7ba5e0774203a1c42ec69ad3c7763752f50b411e33e6a1cc20a3eab8f",
+      "observed/observed_day_0002_0031.csv.gz": "671448bdb527bd40e0f73e57942b562e616ef7f14d6b416344528cd3977081fd",
+      "observed/observed_day_0032_0057.csv.gz": "ab4d93f16eeb715caf4f076c4ab14cd5f2259792b64cd744dc73fc6d10f7fbfd",
+      "observed_manifest": "17d43a935fd6282d8b5252650a34c90ff41ee15d72c92d955811f50860144dfe",
+      "observed_window_manifest": "58aff1b1551baf207a739b7a98cb20092dab7cbc80269a260a2e6e16533cbb02",
+      "source_run_manifest": "381400e97c938e7213923585da1d517a31285b5e89847ff7653dc84fedbd6ff7"
+    },
+    "transfer_every": 3
+  }
+}

@@ -1,0 +1,54 @@
+table dim_sku
+	lineageTag: f993ddaf-92bd-45c5-919d-dcd5e116a5c5
+
+	column sku_id
+		dataType: string
+		lineageTag: 02ba36a4-8825-4570-8a55-89758a31e115
+		summarizeBy: none
+		sourceColumn: sku_id
+
+	column category
+		dataType: string
+		lineageTag: e0f9dae7-c3e1-40e4-8f76-fdee2b4da683
+		summarizeBy: none
+		sourceColumn: category
+
+	column expirable
+		dataType: int64
+		formatString: #,##0
+		lineageTag: 1a802fe2-41ce-43f8-baa9-6b44e66e57fe
+		summarizeBy: none
+		sourceColumn: expirable
+
+	column lot_tracking_required
+		dataType: int64
+		formatString: #,##0
+		lineageTag: 90b490d2-03ca-447d-8a26-2a1869be8a80
+		summarizeBy: none
+		sourceColumn: lot_tracking_required
+
+	column unit_volume_ml
+		dataType: int64
+		formatString: #,##0
+		lineageTag: 09851205-6600-4049-a127-81248acbb69d
+		summarizeBy: none
+		sourceColumn: unit_volume_ml
+
+	column provenance
+		dataType: string
+		lineageTag: 860ed998-d0ce-465a-9c86-083d703ef815
+		summarizeBy: none
+		sourceColumn: provenance
+
+	partition dim_sku = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents(DataRoot & "/dim_sku.csv"), [Delimiter=",", Columns=6, Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
+				    Headers = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    Typed = Table.TransformColumnTypes(Headers, {{"sku_id", type text}, {"category", type text}, {"expirable", Int64.Type}, {"lot_tracking_required", Int64.Type}, {"unit_volume_ml", Int64.Type}, {"provenance", type text}})
+				in
+				    Typed
+
+	annotation PBI_ResultType = Table
+

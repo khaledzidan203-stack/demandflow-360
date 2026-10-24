@@ -1,0 +1,5 @@
+expression DataRoot = "__DEMANDFLOW_DATA_ROOT__" meta [IsParameterQuery=true, Type="Text", IsParameterQueryRequired=true]
+	lineageTag: 265a944e-0f5f-4605-877b-8500594dd270
+
+	annotation PBI_ResultType = Text
+

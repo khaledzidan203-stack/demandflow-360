@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Report",
+    "displayName": "DemandFlow 360"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "70e65613-a7f0-401a-9997-2274ab9da660"
+  }
+}

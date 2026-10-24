@@ -1,0 +1,12 @@
+relationship 8863dc9c-e3b3-5d7b-b7d7-a957be9c381a
+	fromColumn: fact_observed.store_id
+	toColumn: dim_store.store_id
+
+relationship 6f51e6d1-6c52-5b77-885f-48539c3af9cb
+	fromColumn: fact_observed.sku_id
+	toColumn: dim_sku.sku_id
+
+relationship 2fe6e6b7-aa40-5988-b9b9-09e9a77affe3
+	fromColumn: fact_observed.day_index
+	toColumn: dim_day.day_index
+

@@ -1,0 +1,7 @@
+store_id,city_id,city_name,region_id,region_name,assigned_dc_id,capacity_liters,provenance
+STORE-001,CITY-001,Imaginary City 1,REG-001,Fictional Region 1,DC-001,1617,SYN_MASTER
+STORE-002,CITY-001,Imaginary City 1,REG-001,Fictional Region 1,DC-001,4568,SYN_MASTER
+STORE-009,CITY-003,Imaginary City 3,REG-002,Fictional Region 2,DC-002,3689,SYN_MASTER
+STORE-010,CITY-003,Imaginary City 3,REG-002,Fictional Region 2,DC-002,1507,SYN_MASTER
+STORE-017,CITY-005,Imaginary City 5,REG-003,Fictional Region 3,DC-003,5458,SYN_MASTER
+STORE-018,CITY-005,Imaginary City 5,REG-003,Fictional Region 3,DC-003,1654,SYN_MASTER

@@ -1,0 +1,105 @@
+table _Measures
+	lineageTag: bdc5c2e0-bb07-4fad-9498-642cd4fffa7d
+
+	measure 'Observed Sales Units' = SUM(fact_observed[gross_sales_qty])
+		formatString: #,##0
+		displayFolder: 01 Sales & Activity
+		lineageTag: ebbccb77-ad88-4366-a3a4-cec04201af6b
+
+	measure 'Observed Cells' = COUNTROWS(fact_observed)
+		formatString: #,##0
+		displayFolder: 01 Sales & Activity
+		lineageTag: e3e7d563-167e-4c70-a10d-c462cb5c2fe9
+
+	measure 'Full Exposure Cells' = SUM(fact_observed[full_exposure_flag])
+		formatString: #,##0
+		displayFolder: 02 Availability Counts
+		lineageTag: d4fda248-cb24-4bda-97b1-9913931f532f
+
+	measure 'Censored Cells' = SUM(fact_observed[censored_flag])
+		formatString: #,##0
+		displayFolder: 02 Availability Counts
+		lineageTag: be3748cc-4dde-40a6-96fc-6c9ea3127adc
+
+	measure 'No Exposure Cells' = SUM(fact_observed[no_exposure_flag])
+		formatString: #,##0
+		displayFolder: 02 Availability Counts
+		lineageTag: 5ca7bb72-1377-4054-b7ef-69fbdfa051f1
+
+	measure 'EOD Zero Cells' = SUM(fact_observed[eod_zero_stock_flag])
+		formatString: #,##0
+		displayFolder: 02 Availability Counts
+		lineageTag: 1d3545ca-4d15-4167-89f8-12249b5d17d4
+
+	measure 'Zero Sales Cells' = SUM(fact_observed[zero_sales_flag])
+		formatString: #,##0
+		displayFolder: 01 Sales & Activity
+		lineageTag: 95f77fbb-579c-41d6-a1ec-bff88658eec3
+
+	measure 'Full Exposure Rate' = DIVIDE([Full Exposure Cells], [Observed Cells])
+		formatString: 0.0%
+		displayFolder: 03 Availability Rates
+		lineageTag: e742f1b7-05e5-4307-8011-7cac22eb951e
+
+	measure 'Censored Exposure Rate' = DIVIDE([Censored Cells], [Observed Cells])
+		formatString: 0.0%
+		displayFolder: 03 Availability Rates
+		lineageTag: 8b3d2c39-83c3-44d8-b642-aea4edae32c2
+
+	measure 'No Exposure Rate' = DIVIDE([No Exposure Cells], [Observed Cells])
+		formatString: 0.0%
+		displayFolder: 03 Availability Rates
+		lineageTag: bd95310e-4619-4239-b43c-b11dd06664cd
+
+	measure 'EOD Zero Rate' = DIVIDE([EOD Zero Cells], [Observed Cells])
+		formatString: 0.0%
+		displayFolder: 03 Availability Rates
+		lineageTag: 4a9fcc7a-de00-4a5f-8c6f-b93f7f86d18f
+
+	measure 'Sales per Observed Cell' = DIVIDE([Observed Sales Units], [Observed Cells])
+		formatString: 0.00
+		displayFolder: 01 Sales & Activity
+		lineageTag: cbd948fa-0e1c-460f-8bda-1d2489f769fa
+
+	measure 'Closing Store Units (Last Selected Day)' = CALCULATE(SUM(fact_observed[eod_saleable_qty]), KEEPFILTERS(dim_day[day_index] = MAX(dim_day[day_index])))
+		formatString: #,##0
+		displayFolder: 04 Inventory Snapshots
+		lineageTag: 8c4ecee4-8065-4a46-b58c-ab50a73db710
+
+	measure 'Expected Cells' = COUNTROWS(VALUES(dim_day[day_index])) * COUNTROWS(VALUES(dim_store[store_id])) * COUNTROWS(VALUES(dim_sku[sku_id]))
+		formatString: #,##0
+		displayFolder: 05 Data Quality
+
+	measure 'Duplicate Grain Rows' = [Observed Cells] - COUNTROWS(SUMMARIZE(fact_observed, fact_observed[day_index], fact_observed[store_id], fact_observed[sku_id]))
+		formatString: #,##0
+		displayFolder: 05 Data Quality
+
+	measure 'Missing Cells' = MAX(0, [Expected Cells] - ([Observed Cells] - [Duplicate Grain Rows]))
+		formatString: #,##0
+		displayFolder: 05 Data Quality
+
+	measure 'Observed Coverage Rate' = DIVIDE([Observed Cells] - [Duplicate Grain Rows], [Expected Cells])
+		formatString: 0.0%
+		displayFolder: 05 Data Quality
+
+	measure 'Zero Sales With Full Exposure' = CALCULATE([Zero Sales Cells], KEEPFILTERS(fact_observed[availability_status] = "FULL_EXPOSURE"))
+		formatString: #,##0
+		displayFolder: 05 Data Quality
+
+	column _StructuralPlaceholder
+		dataType: string
+		isHidden
+		lineageTag: ce51cb49-ca98-40e4-896d-e910293eabda
+		summarizeBy: none
+		sourceColumn: _StructuralPlaceholder
+
+	partition _Measures = m
+		mode: import
+		source =
+				let
+				    EmptyMeasureHost = #table(type table [_StructuralPlaceholder = text], {})
+				in
+				    EmptyMeasureHost
+
+	annotation PBI_ResultType = Table
+

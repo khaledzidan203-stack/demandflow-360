@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "SemanticModel",
+    "displayName": "DemandFlow 360"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "ef783875-632d-4f7e-9d80-78013fdddeaf"
+  }
+}

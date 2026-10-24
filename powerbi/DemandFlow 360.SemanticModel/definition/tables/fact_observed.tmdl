@@ -1,0 +1,134 @@
+table fact_observed
+	lineageTag: 2bc19424-78a5-4635-bc70-0b2778b5c1ab
+
+	column run_id
+		dataType: string
+		isHidden
+		lineageTag: 97f9e087-82b4-42c4-8ee2-c79cb096e88d
+		summarizeBy: none
+		sourceColumn: run_id
+
+	column scenario_id
+		dataType: string
+		isHidden
+		lineageTag: ed30f3f9-8893-41bc-8e50-ca7ce8950f84
+		summarizeBy: none
+		sourceColumn: scenario_id
+
+	column policy_id
+		dataType: string
+		isHidden
+		lineageTag: a23b0751-b523-4af6-9d12-9addfb899866
+		summarizeBy: none
+		sourceColumn: policy_id
+
+	column day_index
+		dataType: int64
+		formatString: #,##0
+		lineageTag: f4c8f529-d940-41e7-a846-68e53722d3d0
+		summarizeBy: none
+		sourceColumn: day_index
+
+	column available_at_day
+		dataType: int64
+		isHidden
+		formatString: #,##0
+		lineageTag: e6e2886d-13bf-4c85-9aea-6d120e80d3e1
+		summarizeBy: none
+		sourceColumn: available_at_day
+
+	column store_id
+		dataType: string
+		isHidden
+		lineageTag: b8413ea4-9d6b-4823-8997-cce5c7ba2a12
+		summarizeBy: none
+		sourceColumn: store_id
+
+	column sku_id
+		dataType: string
+		isHidden
+		lineageTag: 119cc2cc-c6a1-40ff-a4b6-d96e4a0e19b1
+		summarizeBy: none
+		sourceColumn: sku_id
+
+	column opening_saleable_qty
+		dataType: int64
+		formatString: #,##0
+		lineageTag: 1c5c4e03-0807-4470-a50d-f2f3707ddf2d
+		summarizeBy: none
+		sourceColumn: opening_saleable_qty
+
+	column gross_sales_qty
+		dataType: int64
+		formatString: #,##0
+		lineageTag: 0a1f7188-b3bf-40ee-8d5b-78cf4d57a480
+		summarizeBy: none
+		sourceColumn: gross_sales_qty
+
+	column eod_saleable_qty
+		dataType: int64
+		formatString: #,##0
+		lineageTag: 1af6c88d-9c95-4517-ae43-4bb1913fd961
+		summarizeBy: none
+		sourceColumn: eod_saleable_qty
+
+	column availability_status
+		dataType: string
+		lineageTag: 964444b7-76cd-4834-a432-afab5ce90aaf
+		summarizeBy: none
+		sourceColumn: availability_status
+
+	column eod_zero_stock_flag
+		dataType: int64
+		formatString: #,##0
+		lineageTag: 90e59686-aa56-469b-aecb-dcf9e2ecdc58
+		summarizeBy: none
+		sourceColumn: eod_zero_stock_flag
+
+	column full_exposure_flag
+		dataType: int64
+		formatString: #,##0
+		lineageTag: c6cd75e2-f16f-438c-adc9-c713db266201
+		summarizeBy: none
+		sourceColumn: full_exposure_flag
+
+	column censored_flag
+		dataType: int64
+		formatString: #,##0
+		lineageTag: 58375339-dc43-4a5b-a8de-40991b235262
+		summarizeBy: none
+		sourceColumn: censored_flag
+
+	column no_exposure_flag
+		dataType: int64
+		formatString: #,##0
+		lineageTag: 1239b2d0-0c7e-490f-b96c-e1d690ecf528
+		summarizeBy: none
+		sourceColumn: no_exposure_flag
+
+	column zero_sales_flag
+		dataType: int64
+		formatString: #,##0
+		lineageTag: 76e569b3-f71b-4531-8b8d-af8277c1dd4a
+		summarizeBy: none
+		sourceColumn: zero_sales_flag
+
+	column provenance
+		dataType: string
+		isHidden
+		lineageTag: 4f931cac-dafa-4126-bf13-be3ece32c225
+		summarizeBy: none
+		sourceColumn: provenance
+
+	partition fact_observed = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents(DataRoot & "/fact_observed.csv"), [Delimiter=",", Columns=17, Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
+				    Headers = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    Typed = Table.TransformColumnTypes(Headers, {{"run_id", type text}, {"scenario_id", type text}, {"policy_id", type text}, {"day_index", Int64.Type}, {"available_at_day", Int64.Type}, {"store_id", type text}, {"sku_id", type text}, {"opening_saleable_qty", Int64.Type}, {"gross_sales_qty", Int64.Type}, {"eod_saleable_qty", Int64.Type}, {"availability_status", type text}, {"eod_zero_stock_flag", Int64.Type}, {"full_exposure_flag", Int64.Type}, {"censored_flag", Int64.Type}, {"no_exposure_flag", Int64.Type}, {"zero_sales_flag", Int64.Type}, {"provenance", type text}})
+				in
+				    Typed
+
+	annotation PBI_ResultType = Table
+

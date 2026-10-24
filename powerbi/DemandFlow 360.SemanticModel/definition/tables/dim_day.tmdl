@@ -1,0 +1,49 @@
+table dim_day
+	lineageTag: 75f2f268-f986-4279-b59a-51f0a0ae6708
+
+	column day_index
+		dataType: int64
+		formatString: #,##0
+		lineageTag: 066fe83a-50b5-405b-b568-ae400f3b6add
+		summarizeBy: none
+		sourceColumn: day_index
+
+	column pilot_day_number
+		dataType: int64
+		formatString: #,##0
+		lineageTag: 363ea973-a225-470a-adf5-d8d8fec1d564
+		summarizeBy: none
+		sourceColumn: pilot_day_number
+
+	column pilot_week_index
+		dataType: int64
+		formatString: #,##0
+		lineageTag: ab9963ae-955e-4d00-b30c-161799c4ccbd
+		summarizeBy: none
+		sourceColumn: pilot_week_index
+
+	column pilot_week_label
+		dataType: string
+		lineageTag: 8e7106f5-be29-4e4c-a00a-ced5240ca31e
+		summarizeBy: none
+		sourceColumn: pilot_week_label
+
+	column pilot_day_in_week_index
+		dataType: int64
+		formatString: #,##0
+		lineageTag: 690bbbb7-ee3a-4f91-a14e-aa1e76a9595c
+		summarizeBy: none
+		sourceColumn: pilot_day_in_week_index
+
+	partition dim_day = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents(DataRoot & "/dim_day.csv"), [Delimiter=",", Columns=5, Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
+				    Headers = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    Typed = Table.TransformColumnTypes(Headers, {{"day_index", Int64.Type}, {"pilot_day_number", Int64.Type}, {"pilot_week_index", Int64.Type}, {"pilot_week_label", type text}, {"pilot_day_in_week_index", Int64.Type}})
+				in
+				    Typed
+
+	annotation PBI_ResultType = Table
+

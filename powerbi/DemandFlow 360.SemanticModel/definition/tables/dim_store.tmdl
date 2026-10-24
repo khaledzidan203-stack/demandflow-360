@@ -1,0 +1,64 @@
+table dim_store
+	lineageTag: adc1d2f0-ecf5-4a05-b51c-7ecbd3a7c16a
+
+	column store_id
+		dataType: string
+		lineageTag: c9019403-f7dc-4238-9be3-0f8b5bdfaca9
+		summarizeBy: none
+		sourceColumn: store_id
+
+	column city_id
+		dataType: string
+		lineageTag: fe4ddf52-464c-46ae-a2a8-ac5153bb8dee
+		summarizeBy: none
+		sourceColumn: city_id
+
+	column city_name
+		dataType: string
+		lineageTag: 5ccf04db-5627-4cfc-b1c8-1a4615302877
+		summarizeBy: none
+		sourceColumn: city_name
+
+	column region_id
+		dataType: string
+		lineageTag: ebedf887-07a1-4002-81f1-7c3f65d09b7d
+		summarizeBy: none
+		sourceColumn: region_id
+
+	column region_name
+		dataType: string
+		lineageTag: a32566d4-6f13-4c15-90f3-ca4a181a9740
+		summarizeBy: none
+		sourceColumn: region_name
+
+	column assigned_dc_id
+		dataType: string
+		lineageTag: a48ad966-bfbb-43b9-b481-efc32eddd5ca
+		summarizeBy: none
+		sourceColumn: assigned_dc_id
+
+	column capacity_liters
+		dataType: int64
+		formatString: #,##0
+		lineageTag: 594fa5ee-6f9d-495f-a8b2-e25b7986efd8
+		summarizeBy: none
+		sourceColumn: capacity_liters
+
+	column provenance
+		dataType: string
+		lineageTag: fea6c582-4ad5-460f-8f02-6eebf9407536
+		summarizeBy: none
+		sourceColumn: provenance
+
+	partition dim_store = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents(DataRoot & "/dim_store.csv"), [Delimiter=",", Columns=8, Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
+				    Headers = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    Typed = Table.TransformColumnTypes(Headers, {{"store_id", type text}, {"city_id", type text}, {"city_name", type text}, {"region_id", type text}, {"region_name", type text}, {"assigned_dc_id", type text}, {"capacity_liters", Int64.Type}, {"provenance", type text}})
+				in
+				    Typed
+
+	annotation PBI_ResultType = Table
+
